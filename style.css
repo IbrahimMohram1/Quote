@@ -11,3 +11,29 @@ h1 {
 h6 {
   color: #000 !important;
 }
+
+.quote {
+  min-height: 200px;
+  transform: all 0.5s;
+}
+.quote:hover {
+  transform: scale(1.1);
+}
+
+.circles span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.circles span:nth-child(1) {
+  background-color: #f15f5d;
+}
+.circles span:nth-child(2) {
+  background-color: #febe2e;
+}
+.circles span:nth-child(3) {
+  background-color: #4eb748;
+}
+.rules i {
+  color: #bb4120;
+}

@@ -12,7 +12,7 @@ let Colors = [
   "#77B1A9",
   "#73A857",
 ];
-let quoteContainer = [
+let quoteContainer = JSON.parse(localStorage.getItem("AllQuoute")) ?? [
   {
     quote:
       "“I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.”",
@@ -90,6 +90,10 @@ let randomQuote = "";
 let currentQuote = "";
 let displayQuote = [];
 let currentColor = "";
+let userQuote = document.getElementById("userQuote");
+let userName = document.getElementById("userName");
+let modalCloseBtn = document.getElementById("closeBtn");
+let getQuote = document.querySelectorAll(".quote");
 function newQuote() {
   if (displayQuote.length == quoteContainer.length) {
     displayQuote = [];
@@ -109,7 +113,7 @@ function newQuote() {
 function newColor() {
   let randomColor = Math.floor(Math.random() * Colors.length);
   if (currentColor == randomColor) {
-    // console.log(currentColor);
+    console.log(currentColor);
     newColor();
   } else {
     currentColor = randomColor;
@@ -118,3 +122,49 @@ function newColor() {
   document.getElementById("QuoteStyle").style.color = Colors[currentColor];
   document.body.style.backgroundColor = Colors[currentColor];
 }
+
+function add() {
+  let Quote = {
+    quote: userQuote.value,
+    name: userName.value,
+  };
+  quoteContainer.push(Quote);
+  console.log(quoteContainer);
+  clear();
+  onchange();
+}
+function onchange() {
+  localStorage.setItem("AllQuoute", JSON.stringify(quoteContainer));
+}
+
+function clear() {
+  userQuote.value = null;
+  userName.value = null;
+}
+
+function validation() {
+  let regex = {
+    user_Quote: /^[A-Z a-z 0-9_@#&.,!/"']{30,300}$/,
+    user_Name: /^[A-Z]?[a-z]{3,20}$/,
+  };
+  if (
+    !regex.user_Quote.test(userQuote.value) ||
+    !regex.user_Name.test(userName.value)
+  ) {
+    console.log(userQuote.value);
+    modal.classList.replace("d-none", "d-block");
+    console.log(regex.user_Quote.test(userQuote));
+    console.log(regex.user_Name.test(userName));
+  } else {
+    add();
+  }
+}
+
+modalCloseBtn.addEventListener("click", function () {
+  modal.classList.replace("d-block", "d-none");
+  clear();
+});
+
+// getQuote.addEventListener("click", function () {
+//   console.log("hello");
+// });
